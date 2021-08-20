@@ -1,4 +1,4 @@
-package com.hiberus.gmenar.twittertest.service;
+package com.hiberus.gmenar.twittertestcom.hiberus.gmenar.twittertest.integration.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,9 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.hiberus.gmenar.twittertest.AccionaServicioTwittertestApplication;
 import com.hiberus.gmenar.twittertest.dto.TweetInfoDTO;
+import com.hiberus.gmenar.twittertest.service.TweetInfoService;
 
-@SpringBootTest
+@SpringBootTest(classes = AccionaServicioTwittertestApplication.class)
 public class TweetInfoServiceImplIntegrationTest {
 
 	@Autowired
