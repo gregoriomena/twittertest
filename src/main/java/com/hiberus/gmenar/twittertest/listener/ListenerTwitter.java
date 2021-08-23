@@ -1,6 +1,7 @@
 package com.hiberus.gmenar.twittertest.listener;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ public class ListenerTwitter implements ApplicationListener<ApplicationReadyEven
 	private TweetInfoService tweetInfoService;
 
 	@Autowired
-	public ListenerTwitter(ConfigurationService configurationService, TweetInfoService tweetInfoService) {
+	public ListenerTwitter(@Qualifier("configurationServiceBD") ConfigurationService configurationService, TweetInfoService tweetInfoService) {
 		this.configurationService = configurationService;
 		this.tweetInfoService = tweetInfoService;
 	}
@@ -46,7 +47,7 @@ public class ListenerTwitter implements ApplicationListener<ApplicationReadyEven
 
 		query.track(configurationService.getTracks());
 
-		query.language(configurationService.getLanguages().split(","));
+		query.language(configurationService.getLanguages());
 
 		TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
 		StatusListener listener = new StatusListener() {
