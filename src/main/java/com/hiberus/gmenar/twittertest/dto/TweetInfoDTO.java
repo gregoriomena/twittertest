@@ -2,6 +2,8 @@ package com.hiberus.gmenar.twittertest.dto;
 
 import com.hiberus.gmenar.twittertest.entity.TweetInfo;
 
+import twitter4j.Status;
+
 public class TweetInfoDTO {
 
 	private Long id;
@@ -26,6 +28,13 @@ public class TweetInfoDTO {
 		message = tweetInfo.getMessage();
 		location = tweetInfo.getLocation();
 		valid = tweetInfo.getValid().equals("Y");
+	}
+
+	public TweetInfoDTO(Status status) {
+		user = status.getUser().getName();
+		message = status.getText();
+		location = status.getUser().getLocation();
+		valid = false;
 	}
 
 	public TweetInfo generateBO() {
