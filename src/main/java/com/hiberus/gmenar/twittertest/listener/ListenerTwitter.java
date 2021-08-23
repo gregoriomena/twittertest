@@ -1,4 +1,4 @@
-package com.hiberus.gmenar.twittertest;
+package com.hiberus.gmenar.twittertest.listener;
 
 import java.text.SimpleDateFormat;
 
