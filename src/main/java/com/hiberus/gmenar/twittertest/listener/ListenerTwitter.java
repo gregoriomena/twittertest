@@ -1,12 +1,12 @@
 package com.hiberus.gmenar.twittertest.listener;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import com.hiberus.gmenar.twittertest.dto.TweetInfoDTO;
+import com.hiberus.gmenar.twittertest.service.ConfigurationService;
 import com.hiberus.gmenar.twittertest.service.TweetInfoService;
 
 import twitter4j.FilterQuery;
@@ -21,14 +21,14 @@ import twitter4j.TwitterStreamFactory;
 @Component
 public class ListenerTwitter implements ApplicationListener<ApplicationReadyEvent> {
 
-	@Value("${twitter.languages}")
-	private String languages;
-
-	@Value("${twitter.minFollowers}")
-	private long minFollowers;
+	private ConfigurationService configurationService;
+	private TweetInfoService tweetInfoService;
 
 	@Autowired
-	private TweetInfoService tweetInfoService;
+	public ListenerTwitter(ConfigurationService configurationService, TweetInfoService tweetInfoService) {
+		this.configurationService = configurationService;
+		this.tweetInfoService = tweetInfoService;
+	}
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -44,10 +44,9 @@ public class ListenerTwitter implements ApplicationListener<ApplicationReadyEven
 
 		FilterQuery query = new FilterQuery();
 
-		String[] tracks = { "COVID-19" };
-		query.track(tracks);
+		query.track(configurationService.getTracks());
 
-		query.language(languages.split(","));
+		query.language(configurationService.getLanguages().split(","));
 
 		TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
 		StatusListener listener = new StatusListener() {
@@ -55,7 +54,7 @@ public class ListenerTwitter implements ApplicationListener<ApplicationReadyEven
 			@Override
 			public void onStatus(Status status) {
 
-				if (status.getUser().getFollowersCount() >= minFollowers && status.getHashtagEntities().length > 0) {
+				if (status.getUser().getFollowersCount() >= configurationService.getMinFollowers() && status.getHashtagEntities().length > 0) {
 
 					TweetInfoDTO tweet = new TweetInfoDTO(status);
 					tweetInfoService.create(tweet);

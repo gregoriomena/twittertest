@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hiberus.gmenar.twittertest.dto.TweetInfoDTO;
 import com.hiberus.gmenar.twittertest.service.TweetInfoService;
 
-@RestController
+@RestController()
 public class TweetInfoController {
 
 	private TweetInfoService tweetInfoService;
