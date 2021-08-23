@@ -11,4 +11,6 @@ public interface TweetInfoService {
 	TweetInfoDTO create(TweetInfoDTO tweetInfo);
 
 	List<TweetInfoDTO> findAll(Pageable pagingSort);
+
+	void markAsValidated(Long id);
 }

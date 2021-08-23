@@ -56,4 +56,8 @@ public class TweetInfo {
 	public String getValid() {
 		return valid;
 	}
+
+	public void setValid(String valid) {
+		this.valid = valid;
+	}
 }

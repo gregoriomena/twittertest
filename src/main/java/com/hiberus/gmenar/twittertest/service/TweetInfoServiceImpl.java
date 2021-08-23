@@ -15,8 +15,12 @@ import com.hiberus.gmenar.twittertest.entity.TweetInfo;
 @Service
 public class TweetInfoServiceImpl implements TweetInfoService {
 
-	@Autowired
 	private TweetInfoDAO tweetInfoDAO;
+
+	@Autowired
+	public TweetInfoServiceImpl(TweetInfoDAO tweetInfoDAO) {
+		this.tweetInfoDAO = tweetInfoDAO;
+	}
 
 	@Override
 	public TweetInfoDTO create(TweetInfoDTO tweetInfo) {
@@ -33,6 +37,13 @@ public class TweetInfoServiceImpl implements TweetInfoService {
 		return tweetsBO.stream().map(tweet -> {
 			return new TweetInfoDTO(tweet);
 		}).collect(Collectors.toList());
+	}
+
+	@Override
+	public void markAsValidated(Long id) {
+		TweetInfo tweet = tweetInfoDAO.findById(id).get();
+		tweet.setValid("Y");
+		tweetInfoDAO.save(tweet);
 	}
 
 }

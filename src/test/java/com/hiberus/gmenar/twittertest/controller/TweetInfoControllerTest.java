@@ -21,4 +21,16 @@ public class TweetInfoControllerTest {
 		verify(tweetInfoService).findAll(any());
 
 	}
+
+	@Test
+	public void markAsValidated() {
+
+		TweetInfoService tweetInfoService = mock(TweetInfoService.class);
+
+		TweetInfoController tweetInfoController = new TweetInfoController(tweetInfoService);
+		tweetInfoController.markAsValidated(10L);
+
+		verify(tweetInfoService).markAsValidated(10L);
+
+	}
 }
