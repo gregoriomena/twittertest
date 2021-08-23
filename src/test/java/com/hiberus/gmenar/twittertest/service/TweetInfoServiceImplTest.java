@@ -22,7 +22,7 @@ public class TweetInfoServiceImplTest {
 
 		when(tweetInfoDAO.findById(10L)).thenReturn(Optional.of(tweet));
 
-		TweetInfoServiceImpl tweetInfoService = new TweetInfoServiceImpl(tweetInfoDAO);
+		TweetInfoServiceImpl tweetInfoService = new TweetInfoServiceImpl(tweetInfoDAO, null);
 		tweetInfoService.markAsValidated(10L);
 
 		verify(tweetInfoDAO).findById(10L);

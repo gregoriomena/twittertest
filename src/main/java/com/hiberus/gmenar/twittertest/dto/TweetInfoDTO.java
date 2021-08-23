@@ -1,7 +1,13 @@
 package com.hiberus.gmenar.twittertest.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.hiberus.gmenar.twittertest.entity.Hashtags;
 import com.hiberus.gmenar.twittertest.entity.TweetInfo;
 
+import twitter4j.HashtagEntity;
 import twitter4j.Status;
 
 public class TweetInfoDTO {
@@ -11,6 +17,7 @@ public class TweetInfoDTO {
 	private String message;
 	private String location;
 	private boolean valid;
+	private List<HashtagsDTO> hashtags;
 
 	public TweetInfoDTO() {
 	}
@@ -20,6 +27,8 @@ public class TweetInfoDTO {
 		this.message = message;
 		this.location = location;
 		this.valid = valid;
+
+		hashtags = new ArrayList<HashtagsDTO>();
 	}
 
 	public TweetInfoDTO(TweetInfo tweetInfo) {
@@ -28,6 +37,14 @@ public class TweetInfoDTO {
 		message = tweetInfo.getMessage();
 		location = tweetInfo.getLocation();
 		valid = tweetInfo.getValid().equals("Y");
+
+		if (tweetInfo.getHashtags() != null) {
+			hashtags = tweetInfo.getHashtags().stream().map(h -> {
+				return new HashtagsDTO(h);
+
+			}).collect(Collectors.toList());
+		}
+
 	}
 
 	public TweetInfoDTO(Status status) {
@@ -35,11 +52,19 @@ public class TweetInfoDTO {
 		message = status.getText();
 		location = status.getUser().getLocation();
 		valid = false;
+		hashtags = new ArrayList<HashtagsDTO>();
+
+		if (status.getHashtagEntities() != null) {
+			for (HashtagEntity iter : status.getHashtagEntities()) {
+				HashtagsDTO dto = new HashtagsDTO(iter.getText());
+				hashtags.add(dto);
+			}
+		}
 	}
 
-	public TweetInfo generateBO() {
+	public TweetInfo generateBO(List<Hashtags> hashtags) {
 
-		return new TweetInfo(user, message, location, validLabel());
+		return new TweetInfo(user, message, location, validLabel(), hashtags);
 	}
 
 	public String validLabel() {
@@ -64,6 +89,10 @@ public class TweetInfoDTO {
 
 	public boolean isValid() {
 		return valid;
+	}
+
+	public List<HashtagsDTO> getHashtags() {
+		return hashtags;
 	}
 
 }

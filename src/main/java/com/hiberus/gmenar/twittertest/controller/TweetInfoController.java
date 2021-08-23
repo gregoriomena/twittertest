@@ -9,10 +9,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hiberus.gmenar.twittertest.dto.TweetInfoDTO;
@@ -48,6 +50,7 @@ public class TweetInfoController {
 	}
 
 	@PutMapping("/tweet/{id}")
+	@ResponseStatus(code = HttpStatus.CREATED)
 	public void markAsValidated(@PathVariable Long id) {
 		tweetInfoService.markAsValidated(id);
 	}
