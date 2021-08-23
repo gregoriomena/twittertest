@@ -18,7 +18,7 @@ public class TweetInfo {
 	@Column(nullable = false)
 	private String user;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 1000)
 	private String message;
 
 	@Column(nullable = true)

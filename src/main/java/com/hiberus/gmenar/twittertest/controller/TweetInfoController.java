@@ -30,7 +30,8 @@ public class TweetInfoController {
 
 	@GetMapping("/tweets")
 	public List<TweetInfoDTO> search(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "3") int size, @RequestParam(defaultValue = "id,desc") String[] sort) {
+			@RequestParam(defaultValue = "3") int size, @RequestParam(defaultValue = "id,desc") String[] sort,
+			@RequestParam(defaultValue = "") String user) {
 
 		List<Order> orders = new ArrayList<Order>();
 		if (sort[0].contains(",")) {
@@ -43,7 +44,7 @@ public class TweetInfoController {
 		}
 
 		Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
-		return tweetInfoService.findAll(pagingSort);
+		return tweetInfoService.findAll(user, pagingSort);
 	}
 
 	@PutMapping("/tweet/{id}")

@@ -3,6 +3,7 @@ package com.hiberus.gmenar.twittertest.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,9 +32,16 @@ public class TweetInfoServiceImpl implements TweetInfoService {
 	}
 
 	@Override
-	public List<TweetInfoDTO> findAll(Pageable pagingSort) {
+	public List<TweetInfoDTO> findAll(String user, Pageable pagingSort) {
 
-		Page<TweetInfo> tweetsBO = tweetInfoDAO.findAll(pagingSort);
+		Page<TweetInfo> tweetsBO = null;
+		if (StringUtils.isBlank(user)) {
+			tweetsBO = tweetInfoDAO.findAll(pagingSort);
+		}
+		else {
+			tweetsBO = tweetInfoDAO.findAllByUserIgnoreCase(user, pagingSort);
+		}
+
 		return tweetsBO.stream().map(tweet -> {
 			return new TweetInfoDTO(tweet);
 		}).collect(Collectors.toList());
@@ -41,6 +49,7 @@ public class TweetInfoServiceImpl implements TweetInfoService {
 
 	@Override
 	public void markAsValidated(Long id) {
+
 		TweetInfo tweet = tweetInfoDAO.findById(id).get();
 		tweet.setValid("Y");
 		tweetInfoDAO.save(tweet);

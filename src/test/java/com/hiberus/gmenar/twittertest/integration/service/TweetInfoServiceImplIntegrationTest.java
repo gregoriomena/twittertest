@@ -42,7 +42,7 @@ public class TweetInfoServiceImplIntegrationTest {
 
 		createMethodGeneratesAnId();
 		Pageable pagingSort = PageRequest.of(0, 5, Sort.by("id"));
-		assertThat(tweetInfoService.findAll(pagingSort)).isNotEmpty();
+		assertThat(tweetInfoService.findAll(null, pagingSort)).isNotEmpty();
 	}
 
 }

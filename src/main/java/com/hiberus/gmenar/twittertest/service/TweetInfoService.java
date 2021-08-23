@@ -10,7 +10,7 @@ public interface TweetInfoService {
 
 	TweetInfoDTO create(TweetInfoDTO tweetInfo);
 
-	List<TweetInfoDTO> findAll(Pageable pagingSort);
+	List<TweetInfoDTO> findAll(String user, Pageable pagingSort);
 
 	void markAsValidated(Long id);
 }
