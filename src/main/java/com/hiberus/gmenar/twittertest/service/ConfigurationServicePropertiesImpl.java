@@ -21,7 +21,7 @@ public class ConfigurationServicePropertiesImpl implements ConfigurationService 
 	}
 
 	@Override
-	public long getMinFollowers() {
+	public Long getMinFollowers() {
 		return minFollowers;
 	}
 

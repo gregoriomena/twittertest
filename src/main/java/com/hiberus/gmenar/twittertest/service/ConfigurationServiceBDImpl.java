@@ -25,7 +25,7 @@ public class ConfigurationServiceBDImpl implements ConfigurationService {
 	}
 
 	@Override
-	public long getMinFollowers() {
+	public Long getMinFollowers() {
 		String value = get("minFollowers");
 		return StringUtils.isBlank(value) ? null : Long.parseLong(value);
 	}
