@@ -1,4 +1,4 @@
-package com.hiberus.gmenar.twittertestcom.hiberus.gmenar.twittertest.integration.service;
+package com.hiberus.gmenar.twittertest.integration.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

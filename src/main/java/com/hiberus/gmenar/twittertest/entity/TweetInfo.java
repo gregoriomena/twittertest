@@ -21,7 +21,7 @@ public class TweetInfo {
 	@Column(nullable = false)
 	private String message;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String location;
 
 	@Column(nullable = false)

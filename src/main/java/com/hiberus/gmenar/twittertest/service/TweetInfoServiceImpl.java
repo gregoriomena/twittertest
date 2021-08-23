@@ -1,6 +1,11 @@
 package com.hiberus.gmenar.twittertest.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.hiberus.gmenar.twittertest.dao.TweetInfoDAO;
@@ -19,6 +24,15 @@ public class TweetInfoServiceImpl implements TweetInfoService {
 		tweetInfo.generateBO();
 		TweetInfo tweetInfoBO = tweetInfoDAO.save(tweetInfo.generateBO());
 		return new TweetInfoDTO(tweetInfoBO);
+	}
+
+	@Override
+	public List<TweetInfoDTO> findAll(Pageable pagingSort) {
+
+		Page<TweetInfo> tweetsBO = tweetInfoDAO.findAll(pagingSort);
+		return tweetsBO.stream().map(tweet -> {
+			return new TweetInfoDTO(tweet);
+		}).collect(Collectors.toList());
 	}
 
 }

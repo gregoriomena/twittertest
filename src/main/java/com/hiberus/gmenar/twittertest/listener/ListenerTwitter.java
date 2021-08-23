@@ -1,5 +1,6 @@
 package com.hiberus.gmenar.twittertest.listener;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -26,6 +27,7 @@ public class ListenerTwitter implements ApplicationListener<ApplicationReadyEven
 	@Value("${twitter.minFollowers}")
 	private long minFollowers;
 
+	@Autowired
 	private TweetInfoService tweetInfoService;
 
 	@Override
